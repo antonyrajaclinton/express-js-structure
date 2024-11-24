@@ -3,7 +3,7 @@ const router = express.Router();
 import UserController from '../controllers/UserController.js';
 
 
-router.get('/', (req, res) => {
+router.get('/registerUser', (req, res) => {
 
 
     UserController.registerUser(req, res)
