@@ -1,14 +1,14 @@
 import express from 'express';
 import adminRoutes from './routes/admin.js';
 import userRoutes from './routes/user.js'
-import {mongooseConnect} from './config/databaseConnect.js';
+import mondodbconnect from './config/databaseConnect.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
 const app = express();
 
 //Database Connection Establishment
-mongooseConnect();
+mondodbconnect();
 
 //app middleware
 app.use(cors());

@@ -3,18 +3,21 @@ import mongoose from 'mongoose';
 const userModelSchema = new mongoose.Schema({
     userName: { type: String },  //columns
     password: { type: String },
+    mobileNo: { type: String },
+    emailId: { type: String },
+    role: { type: String }
 }, {
     versionKey: false,
     timestamps: true
 });
 
-const userCollectionModel = mongoose.model('user-collection', userModelSchema);   //user-collection ->collection name
+
 
 
 class userModelClass {
 
     constructor() {
-        this.model = userCollectionModel
+        this.model = mongoose.model('user-collection', userModelSchema);   //user-collection ->collection name
     }
 
     async insert(objectDatas) {
