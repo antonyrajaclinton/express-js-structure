@@ -18,6 +18,7 @@ router.post('/login', (req, res) => {
 
 })
 router.post('/getUserList', authenticate, UserController.getUserList)
+router.post('/getUserDetailsByid', authenticate, UserController.getUserDetailsByid)
 
 
 
