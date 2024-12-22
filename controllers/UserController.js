@@ -1,6 +1,7 @@
 import UserModel from "../models/UserModel.js";
 import jwtToken from "jsonwebtoken";
 import crypto from "node:crypto";
+import ProductModel from "../models/ProductModel.js";
 
 
 
@@ -72,6 +73,26 @@ class UserController {
             let userId = request.body.userId;
             let getData = await UserModel.model.findOne({ _id: userId });
             response.send({ status: true, getData, message: 'success' });
+        } catch (error) {
+            response.send({ status: false, message: 'An Error Occured', error });
+        }
+    }
+    async add_product(request, response, next) {
+        try {
+            let fileName = "";
+            if (request.file?.filename) {
+                fileName = request.file.filename;
+            }
+
+
+            let insertData = {
+                productName: request.body.productName,
+                productPrize: request.body.productPrize,
+                productFileName: fileName
+            }
+            await ProductModel.insert(insertData)
+
+            response.send({ status: true, message: 'success' });
         } catch (error) {
             response.send({ status: false, message: 'An Error Occured', error });
         }
