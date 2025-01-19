@@ -28,7 +28,8 @@ router.post('/login', (req, res) => {
 router.post('/getUserList', authenticate, UserController.getUserList)
 router.post('/getUserDetailsByid', authenticate, UserController.getUserDetailsByid);
 router.post('/add_product', authenticate, upload.single('productImage'), UserController.add_product);
-
+router.get('/getProductLists', authenticate,  UserController.productLists);
+router.get('/get_product', authenticate,  UserController.getProduct);
 
 
 

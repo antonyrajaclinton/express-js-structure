@@ -85,14 +85,62 @@ class UserController {
             }
 
 
+
+
             let insertData = {
                 productName: request.body.productName,
                 productPrize: request.body.productPrize,
                 productFileName: fileName
             }
-            await ProductModel.insert(insertData)
+
+
+            let productId = request.body.productId;
+            if (productId && productId != '') {
+                await ProductModel.update(productId, insertData)
+            } else {
+                await ProductModel.insert(insertData)
+            }
+
 
             response.send({ status: true, message: 'success' });
+        } catch (error) {
+            response.send({ status: false, message: 'An Error Occured', error });
+        }
+    }
+
+    async productLists(request, response, next) {
+        try {
+
+            let getProducts = await ProductModel.getProducts();
+            let productData = [];
+            for (let productData1 of getProducts) {
+                productData.push({
+                    id: productData1._id,
+                    name: productData1.productName,
+                    prize: productData1.productPrize,
+                    productImage: 'http://localhost:4000/uploads/products/' + productData1.productFileName
+                })
+            }
+            response.send({ status: true, message: 'success', productData: productData });
+        } catch (error) {
+            response.send({ status: false, message: 'An Error Occured', error });
+        }
+    }
+    async getProduct(request, response, next) {
+        try {
+
+            let requestData = request.query;
+            let productId = requestData.productId;
+
+            let productData = await ProductModel.getProductById(productId);
+
+
+
+
+            productData = { ...productData._doc, image: 'http://localhost:4000/uploads/products/' + productData.productFileName }
+
+
+            response.send({ status: true, message: 'success', productData: productData });
         } catch (error) {
             response.send({ status: false, message: 'An Error Occured', error });
         }
